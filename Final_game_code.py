@@ -20,13 +20,13 @@ blue = (0, 0, 255)
 car_width = 65
 
 gameDisplay = pg.display.set_mode((display_width, display_height))
-pg.display.set_caption("Inputing_some_value_when_a_game_is_crashed_by_boundaries")
+pg.display.set_caption("BORN TO DRIVE")
 clock = pg.time.Clock()
-carimg = pg.image.load(
-    "Black_viper.png")
+car_img = pg.image.load(
+    "utilities\\Black_viper.png")
 pause = False
-crash_sound = pg.mixer.Sound("crash_s.wav")
-pg.mixer.music.load("C:\\Users\\saish\\PycharmProjects\\GoP\\Saish\\borntodrive\\bensound-allthat.wav")
+crash_sound = pg.mixer.Sound("utilities\\crash_s.wav")
+pg.mixer.music.load("utilities\\bensound-allthat.wav")
 
 
 def things_dodged(count):
@@ -36,23 +36,23 @@ def things_dodged(count):
 
 
 def things(thingx, thingy, thingw, thingh, color):
-    pg.draw.rect(gameDisplay, color, [thingx, thingy, thingw, thingh])
+    pg.draw.rect(gameDisplay, color, [int(thingx), int(thingy), int(thingw), int(thingh)])
 
 
 def car(x, y):
-    gameDisplay.blit(carimg, (x, y))
+    gameDisplay.blit(car_img, (int(x), int(y)))
 
 
 def text_objects(text, font):
-    textSurface = font.render(text, True, black)
-    return textSurface, textSurface.get_rect()
+    text_surface = font.render(text, True, black)
+    return text_surface, text_surface.get_rect()
 
 
 def message_display(text):
-    largeText = pg.font.Font('freesansbold.ttf', 115)
-    TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((display_width / 2), (display_height / 2))
-    gameDisplay.blit(TextSurf, TextRect)
+    large_text = pg.font.Font('freesansbold.ttf', 115)
+    text_surf, text_rect = text_objects(text, large_text)
+    text_rect.center = ((display_width // 2), (display_height // 2))
+    gameDisplay.blit(text_surf, text_rect)
     pg.display.update()
     time.sleep(2)
     game_loop()
@@ -67,10 +67,10 @@ def game_intro():
                 pg.quit()
                 quit()
         gameDisplay.fill(white)
-        largeText = pg.font.Font('freesansbold.ttf', 115)
-        TextSurf, TextRect = text_objects("A bit Racey", largeText)
-        TextRect.center = ((display_width / 2), (display_height / 2))
-        gameDisplay.blit(TextSurf, TextRect)
+        large_text = pg.font.Font('freesansbold.ttf', 115)
+        text_surf, text_rect = text_objects("A bit Racey", large_text)
+        text_rect.center = ((display_width // 2), (display_height // 2))
+        gameDisplay.blit(text_surf, text_rect)
         mouse = pg.mouse.get_pos()
         if 150 + 100 >= mouse[0] >= 150 and 450 + 50 >= mouse[1] >= 450:
             pg.draw.rect(gameDisplay, green, (150, 450, 120, 50))
@@ -90,16 +90,14 @@ def game_intro():
             pg.draw.rect(gameDisplay, (200, 0, 0), (550, 450, 120, 50))
         smallText = pg.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = text_objects("New Game", smallText)
-        textRect.center = (150 + (120 / 2), 450 + (50 / 2))
+        textRect.center = (150 + (120 // 2), 450 + (50 // 2))
         gameDisplay.blit(textSurf, textRect)
         smallText1 = pg.font.Font("freesansbold.ttf", 20)
         textSurf, textRect = text_objects("Quit", smallText1)
-        textRect.center = (550 + (120 / 2), 450 + (50 / 2))
+        textRect.center = (550 + (120 // 2), 450 + (50 // 2))
         gameDisplay.blit(textSurf, textRect)
         pg.display.update()
         clock.tick(15)
-
-
 
 
 def button(msg, x, y, w, h, ac, ic, action=None):
@@ -107,30 +105,27 @@ def button(msg, x, y, w, h, ac, ic, action=None):
     click = pg.mouse.get_pressed()
     if x + w >= mouse[0] >= x and y + h >= mouse[1] >= y:
         pg.draw.rect(gameDisplay, ac, (x, y, w, h))
-        if click[0] == 1 and action != None:
+        if click[0] == 1 and action is not None:
             action()
     else:
         pg.draw.rect(gameDisplay, ic, (x, y, w, h))
     text_variable = pg.font.Font("freesansbold.ttf", 20)
-    textSurf, textRect = text_objects(msg, text_variable)
-    textRect.center = (x + (w / 2), y + (h / 2))
-    gameDisplay.blit(textSurf, textRect)
+    text_surf, text_rect = text_objects(msg, text_variable)
+    text_rect.center = (x + (w // 2), y + (h // 2))
+    gameDisplay.blit(text_surf, text_rect)
     pg.display.update()
     clock.tick(15)
 
 
-def unpaused():
+def un_paused():
     global pause
     pg.mixer.music.unpause()
     pause = False
 
 
-def quitgame():
+def quit_game():
     pg.quit()
     quit()
-
-
-
 
 
 def paused():
@@ -138,10 +133,10 @@ def paused():
     pg.mixer.music.pause()
     largeText = pg.font.SysFont("comicsansms", 115)
     TextSurf, TextRect = text_objects("Paused", largeText)
-    TextRect.center = ((display_width / 2), (display_height / 2))
+    TextRect.center = ((display_width // 2), (display_height // 2))
     gameDisplay.blit(TextSurf, TextRect)
 
-    while pause == True:
+    while pause:
         for event in pg.event.get():
 
             if event.type == pg.QUIT:
@@ -150,8 +145,8 @@ def paused():
 
         # gameDisplay.fill(white)
 
-        button("Continue", 150, 450, 100, 50, green, (0, 200, 0), unpaused)
-        button("Quit", 550, 450, 100, 50, red, (200, 0, 0), quitgame)
+        button("Continue", 150, 450, 100, 50, green, (0, 200, 0), un_paused)
+        button("Quit", 550, 450, 100, 50, red, (200, 0, 0), quit_game)
 
         pg.display.update()
         clock.tick(15)
@@ -163,7 +158,7 @@ def crash():
     # message_display("You Crashed")
     largeText = pg.font.Font('freesansbold.ttf', 115)
     TextSurf, TextRect = text_objects("You Crashed", largeText)
-    TextRect.center = ((display_width / 2), (display_height / 2))
+    TextRect.center = ((display_width // 2), (display_height // 2))
     gameDisplay.blit(TextSurf, TextRect)
     while True:
         for event in pg.event.get():
@@ -171,7 +166,7 @@ def crash():
                 pg.quit()
                 quit()
         button("Retry", 150, 450, 100, 50, blue, (0, 0, 200), game_loop)
-        button("Quit", 550, 450, 100, 50, red, (200, 0, 0), quitgame)
+        button("Quit", 550, 450, 100, 50, red, (200, 0, 0), quit_game)
     pg.display.update()
     clock.tick(15)
 
