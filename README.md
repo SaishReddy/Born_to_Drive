@@ -23,7 +23,7 @@ for example using conda,
  
  # Contributions
  
- All contributions are *highly appreciated*. To make any contribution:
+ All contributions are ***highly appreciated***. To make any contribution:
  
  1. Fork the project
  2. Create your own branch `git checkout -b <anyName>`
