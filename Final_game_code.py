@@ -219,7 +219,8 @@ def game_loop():
             thing_width += 1.2
             car_speed += 0.1
         if y < thing_starty + thing_height:
-            if thing_startx < x < thing_startx + thing_width or thing_startx < x + car_width < thing_startx + thing_width:
+            if thing_startx < x < thing_startx + thing_width or \
+                    thing_startx < x + car_width < thing_startx + thing_width:
                 print('You crashed :)')
                 pass
                 #       crashed+=1
